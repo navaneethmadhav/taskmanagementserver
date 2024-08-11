@@ -105,3 +105,41 @@ server.delete('/delete-task/:id', async (req, res) => {
         });
     }
 })
+
+server.put('/update-task/:id', async (req, res) => {
+    try {
+        
+        const {id} = req.params;
+        const { taskHeading, taskDescription, taskStatus, endDate } = req.body;
+
+        const updatedTask = await db.Task.findOne({task_id: id});
+        // console.log(updatedTask);
+        
+
+        if(!updatedTask) {
+            res.status(404).json({
+                status: flase,
+                statusCode: 404,
+                message: "No Task found"
+            });
+        } else {
+            updatedTask.task_id = id
+            updatedTask.task_heading = taskHeading
+            updatedTask.task_description = taskDescription
+            updatedTask.task_status = taskStatus
+            updatedTask.end_date = endDate
+
+            updatedTask.save();
+
+            res.status(200).json({
+                status: true,
+                statusCode: 200,
+                message: "Task Updated Successfully"
+            });
+        }
+        
+
+    } catch (error) {
+        
+    }
+})
