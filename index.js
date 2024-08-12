@@ -21,7 +21,6 @@ server.listen(8001, () => {
 server.post('/tasks', async (req, res) => {
     try {
         const { id, taskHeading, taskPriority, taskDescription, endDate, status } = req.body;
-        console.log(status);
 
 
         if (!id || !taskHeading || !taskPriority || !taskDescription || !endDate) {
